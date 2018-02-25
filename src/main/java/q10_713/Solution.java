@@ -9,22 +9,24 @@ package q10_713;
 
 public class Solution {
 
-    //Status: Time Limit Exceeded
     public int numSubarrayProductLessThanK(int[] nums, int k) {
-        int count = 0;
-        for (int i = 0; i < nums.length; i++) {
-            int res = nums[i];
-            int j = i;
-            while (res < k) {
-                count++;
-                if (++j < nums.length){
-                    res *= nums[j];
-                }
-                else {
-                    break;
-                }
-            }
+        if (k == 0){
+            return 0;
+        }
 
+        int res = 1;
+        int i = 0;
+        int j = 0;
+        int count = 0;
+
+        while (j < nums.length) {
+            res *= nums[j];
+            while (res >= k && i <= j) {
+                res /= nums[i];
+                i++;
+            }
+            count += j - i + 1;
+            j++;
         }
         return count;
     }
